@@ -16,13 +16,13 @@ enemyImg = []
 enemyX = []
 enemyY = [] 
 enemyY_Change = 30
-enemyChange = 0.4
+enemyChange = [] 
 
 for i in range(6):
     enemyImg.append(pygame.image.load('ufo.png'))
     enemyX.append(random.randint(0,736))
     enemyY.append(random.randint(50,150))
-
+    enemyChange.append(0.4)
 
 bulletX = 0
 bulletY = 600
@@ -79,38 +79,30 @@ while runner:
         bulletState = "ready"
     if bulletState == "fire":
         fire(bulletX,bulletY)
-        bulletY -= 1
+        bulletY -= 2
     
     for i in range(6):
 
-        enemyX[i] += enemyChange
+        enemyX[i] += enemyChange[i]
         if enemyX[i] <= 0:
-            enemyChange = 0.4
+            enemyChange[i] = 0.4
             enemyY[i] += enemyY_Change 
         elif enemyX[i] >= 736:
-            enemyChange = -0.4
+            enemyChange[i] = -0.4
             enemyY[i] += enemyY_Change  
         enemy(enemyX[i],enemyY[i],i)
 
         collison = isCollison(enemyX[i],enemyY[i],bulletX,bulletY)
         if collison == True:
             bulletY = 600
-            print('score')
+            print(score)
             score += 1
             bulletState = "ready"
             enemyX[i] = random.randint(0,700)
             enemyY[i] = random.randint(100,300)
 
     player(playerX,playerY)
-
-   
     pygame.display.update()
-
-
-
-
-
-
 
 
 
